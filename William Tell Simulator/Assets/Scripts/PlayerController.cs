@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour {
     public SteamVR_ControllerManager ControllerManager;
     public Gun Gun;
 	public Text vrInstructionText;
+	public Text externalMonitorText;
 
     SteamVR_TrackedObject trackedObj;
     SteamVR_TrackedController controller;
