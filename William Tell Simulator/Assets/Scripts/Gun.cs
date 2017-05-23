@@ -4,9 +4,21 @@ using UnityEngine;
 using Valve.VR.InteractionSystem;
 
 public class Gun : MonoBehaviour {
-    public Arrow arrowPrefab;
-	public float arrowReleaseVelocity;
+	//SHOTS SHOTS SHOTS SHOTS!!
+	public int maxShots;
+	private int shots = 0;
+	public int Shots {
+		get { return shots; }
+		set { 
+			shots = value;
+			if (shots >= maxShots)
+				PlayerController.Instance.EndGame(false);
+		}
+	}
 
+	public Arrow arrowPrefab;
+	public float arrowReleaseVelocity;
+		
 	public Transform apple;
 	public Transform head;
     public Transform firingTrans;
@@ -62,6 +74,7 @@ public class Gun : MonoBehaviour {
 	private void ShootArrow () {
 		//Arrow newArrow = Instantiate(arrowPrefab, firingTrans.position, transform.rotation);
 
+		Shots++;
 		Arrow arrow = Instantiate(arrowPrefab, firingTrans.position, transform.rotation);;
 		arrow.shaftRB.isKinematic = false;
 		arrow.shaftRB.useGravity = true;
