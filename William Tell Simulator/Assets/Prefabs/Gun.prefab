@@ -51,6 +51,7 @@ GameObject:
   - component: {fileID: 4549932617200450}
   - component: {fileID: 114800051056726582}
   - component: {fileID: 120261100183152432}
+  - component: {fileID: 95533760037362828}
   m_Layer: 0
   m_Name: Gun
   m_TagString: Untagged
@@ -113,6 +114,21 @@ GameObject:
   - component: {fileID: 4856079046361672}
   m_Layer: 0
   m_Name: Mag
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1723951690541658
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4922137201435986}
+  m_Layer: 0
+  m_Name: ArrowFather
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -207,6 +223,7 @@ Transform:
   m_Children:
   - {fileID: 4366156754075048}
   - {fileID: 4470591915184356}
+  - {fileID: 4922137201435986}
   m_Father: {fileID: 4549932617200450}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
@@ -348,6 +365,19 @@ Transform:
   m_Father: {fileID: 4638907833414994}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4922137201435986
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1723951690541658}
+  m_LocalRotation: {x: -0, y: -1, z: -0, w: 0}
+  m_LocalPosition: {x: 0, y: 0.206, z: -0.067}
+  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_Children: []
+  m_Father: {fileID: 4164543668857968}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4926999550559290
 Transform:
   m_ObjectHideFlags: 1
@@ -379,6 +409,23 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!95 &95533760037362828
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1376192511020442}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 9571c9f2503d8da49939d631785179a5, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &114800051056726582
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -393,9 +440,11 @@ MonoBehaviour:
   maxShots: 7
   arrowPrefab: {fileID: 11487904, guid: 81fc1450441aca64e8cc1a0e14b1aa77, type: 2}
   arrowReleaseVelocity: 25
+  animator: {fileID: 95533760037362828}
   apple: {fileID: 0}
   head: {fileID: 0}
   firingTrans: {fileID: 4470591915184356}
+  arrowFather: {fileID: 4922137201435986}
   minDistance: 1
   laserSight: {fileID: 120261100183152432}
 --- !u!120 &120261100183152432
