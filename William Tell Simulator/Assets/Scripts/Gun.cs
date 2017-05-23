@@ -38,10 +38,15 @@ public class Gun : MonoBehaviour {
 	void Update () {
         distance = Vector3.Distance(firingTrans.position, apple.position);
 
-		if (!PlayerController.Instance.gameOver) {
+		if (distance <= minDistance) {
 			PlayerController.Instance.vrInstructionText.enabled = !canFire;
 			PlayerController.Instance.externalMonitorText.enabled = !canFire;
 		}
+
+		//if (!PlayerController.Instance.gameOver) {
+			//PlayerController.Instance.vrInstructionText.enabled = !canFire;
+			//PlayerController.Instance.externalMonitorText.enabled = !canFire;
+		//}
 
 		//Lazerz dawgz
 		LaserSight();
