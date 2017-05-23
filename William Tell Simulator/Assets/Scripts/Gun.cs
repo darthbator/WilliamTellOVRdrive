@@ -18,6 +18,7 @@ public class Gun : MonoBehaviour {
 	void Update () {
         distance = Vector3.Distance(firingTrans.position, apple.position);
 		PlayerController.Instance.vrInstructionText.enabled = !canFire;
+		PlayerController.Instance.externalMonitorText.enabled = !canFire;
 
 		//Lazerz dawgz
 		LaserSight();
@@ -35,13 +36,17 @@ public class Gun : MonoBehaviour {
         if (Physics.Raycast(firingTrans.position, firingTrans.forward, out hit)) {
 			if (hit.transform == apple) {
 				Debug.Log("Apple core!");
-				//apple.GetComponent<Renderer>().material.color = Color.green;
+				PlayerController.Instance.vrInstructionText.text = "HE SHOT THE APPLE!!!";
+				PlayerController.Instance.externalMonitorText.text = "YOU SHOT THE APPLE!!!!";
+				PlayerController.Instance.vrInstructionText.enabled = true;
+				PlayerController.Instance.externalMonitorText.enabled = true;
 			} else if (hit.transform == head) {
 				Debug.LogError("You shot your son!!!");
-				/*foreach (Material mat in head.GetComponent<Renderer>().materials)
-					mat.color = Color.red;*/
+				PlayerController.Instance.vrInstructionText.text = "YOU'RE DEAD!!!!";
+				PlayerController.Instance.externalMonitorText.text = "YOU SHOT HIM YOU MONSTER!!!!!!";
+				PlayerController.Instance.vrInstructionText.enabled = true;
+				PlayerController.Instance.externalMonitorText.enabled = true;
 			}
-
 			PlayerController.Instance.EndGame();
         }
     }
