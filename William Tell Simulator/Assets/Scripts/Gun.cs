@@ -31,14 +31,19 @@ public class Gun : MonoBehaviour {
 
 		Debug.DrawRay(firingTrans.position, firingTrans.forward * 10000f, Color.red, 5f);
 
+		//FIXME model color changes not working after models integrated
         RaycastHit hit;
         if (Physics.Raycast(firingTrans.position, firingTrans.forward, out hit)) {
 			if (hit.transform == apple) {
 				Debug.Log("Apple core!");
-				apple.GetComponent<Renderer>().material.color = Color.green;
-			} else if (hit.transform == head)
+				//apple.GetComponent<Renderer>().material.color = Color.green;
+			} else if (hit.transform == head) {
 				Debug.LogError("You shot your son!!!");
-				
+				/*foreach (Material mat in head.GetComponent<Renderer>().materials)
+					mat.color = Color.red;*/
+			}
+
+			PlayerController.Instance.EndGame();
         }
     }
 

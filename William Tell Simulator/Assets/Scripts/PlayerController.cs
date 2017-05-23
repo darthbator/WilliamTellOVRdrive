@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour {
 
     public static PlayerController Instance;
 
+	public float endGameWait = 3f;
     public SteamVR_ControllerManager ControllerManager;
     public Gun Gun;
 
@@ -40,4 +41,13 @@ public class PlayerController : MonoBehaviour {
         microsecondDuration = (ushort)Mathf.Clamp(microsecondDuration, 1, 3999);
         device.TriggerHapticPulse(microsecondDuration);
     }
+
+	public void EndGame () {
+		StartCoroutine(_EndGame());
+	}
+
+	private IEnumerator _EndGame () {
+		yield return new WaitForSeconds (endGameWait);
+		Application.LoadLevel(0);
+	}
 }
