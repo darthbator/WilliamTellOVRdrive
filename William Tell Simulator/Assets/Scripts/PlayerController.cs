@@ -5,7 +5,10 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour {
+	[SerializeField] private Transform bowFather;
 
+	public string winText;
+	public string loseText;
     public float bowOffsetScalar;
 
 	public static PlayerController Instance;
@@ -74,11 +77,11 @@ public class PlayerController : MonoBehaviour {
 		gameOver = true;
 
 		if (winState) {
-			vrInstructionText.text = "you shot dat arrow BOIEEEE";
-			externalMonitorText.text = "you shot dat arrow BOIEEEE";
+			vrInstructionText.text = winText;
+			externalMonitorText.text = winText;
 		} else {
-			PlayerController.Instance.vrInstructionText.text = "YOU'RE DEAD!!!!";
-			PlayerController.Instance.externalMonitorText.text = "YOU SHOT HIM YOU MONSTER!!!!!!";
+			vrInstructionText.text = loseText;
+			externalMonitorText.text = loseText;
 		}
 
 		vrInstructionText.enabled = true;
@@ -104,6 +107,6 @@ public class PlayerController : MonoBehaviour {
 		float headsetEulerY = Camera.main.transform.rotation.eulerAngles.y;
 		wall.rotation = Quaternion.Euler(new Vector3 (0, headsetEulerY, 0));
 		 
-		GameObject.Find("BowFather").transform.position = -backwards * bowOffsetScalar;
+		bowFather.position = -backwards * bowOffsetScalar;
 	}
 }
