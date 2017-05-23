@@ -169,16 +169,19 @@ namespace Valve.VR.InteractionSystem
 					Physics.IgnoreCollision( shaftRB.GetComponent<Collider>(), collision.collider );
 				}*/
 
+				if (collision.gameObject.name == "Apple") {
+					collision.transform.SetParent(transform);
+					PlayerController.Instance.EndGame(true);
+				} else if (collision.gameObject.name == "Head") {
+					PlayerController.Instance.HeadHits++;
+					BloodHit(collision.contacts);
+				}
+
 				if ( canStick )
 				{
 					StickInTarget( collision, travelledFrames < 2 );
 				}
 
-				if (collision.gameObject.name == "Apple") {
-					collision.transform.SetParent(transform);
-					PlayerController.Instance.EndGame(true);
-				} else if (collision.gameObject.name == "Head") 
-					PlayerController.Instance.HeadHits++;
 
 				// Player Collision Check (self hit)
 				/*if ( Player.instance && collision.collider == Player.instance.headCollider )
@@ -187,6 +190,7 @@ namespace Valve.VR.InteractionSystem
 				}*/
 			}
 		}
+
 
 
 		//-------------------------------------------------
@@ -258,6 +262,20 @@ namespace Valve.VR.InteractionSystem
 			transform.rotation = prevRotation;
 			transform.position = prevPosition;
 			transform.position = collision.contacts[0].point - transform.forward * ( 0.75f - ( Util.RemapNumberClamped( prevVelocity.magnitude, 0f, 10f, 0.0f, 0.1f ) + Random.Range( 0.0f, 0.05f ) ) );
+		}
+
+		void BloodHit(ContactPoint[] contactPoints)
+		{
+			if (PublicReferences.Instance.BloodHitPrefab == null)
+				return;
+
+			Vector3 spawnPoint = contactPoints[0].point; // Vector3.Lerp(prevPosition, contactPoints[0].point, 0.9f);
+			Quaternion spawnRot = Quaternion.FromToRotation(Vector3.up, contactPoints[0].normal);
+
+			GameObject particleGO = GameObject.Instantiate(PublicReferences.Instance.BloodHitPrefab, spawnPoint, spawnRot);
+			particleGO.transform.SetParent(PublicReferences.Instance.PlayerHead, true);
+
+			Debug.Log("Prev pos: " + prevPosition + ", Contact point = " + contactPoints[0].point);
 		}
 
 
