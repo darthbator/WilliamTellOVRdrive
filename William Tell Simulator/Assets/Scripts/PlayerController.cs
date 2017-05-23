@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour {
 
-    public float wallOffset;
+    public float wallOffsetScalar;
 
 	public static PlayerController Instance;
 
@@ -90,11 +90,17 @@ public class PlayerController : MonoBehaviour {
 
 	public void PlaceWall (object sender, ClickedEventArgs args) {
 		Transform wall = GameObject.Find("WallFather").transform;
+
+		//Get the backwards vector absent tilt
 		Vector3 backwards = -Camera.main.transform.forward;
 		backwards.y = 0;
+
+		//place the wall
 		Vector3 newPlacement = Camera.main.transform.position;
 		newPlacement.y = wall.transform.position.y;
-		wall.transform.position = newPlacement + backwards * wallOffset;
+		wall.transform.position = newPlacement + backwards;
+
+		//rotate wall
 		float headsetEulerY = Camera.main.transform.rotation.eulerAngles.y;
 		wall.rotation = Quaternion.Euler(new Vector3 (0, headsetEulerY, 0));
 	}
