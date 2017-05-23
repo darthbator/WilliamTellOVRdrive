@@ -22,11 +22,13 @@ public class Gun : MonoBehaviour {
         if (!canFire)
             return;
 
+		print("pew pew");
         RaycastHit hit;
-        if (Physics.Raycast(firingTrans.position, firingTrans.forward, out hit))
-        {
-            if (hit.transform == apple)
-                Debug.Log("Apple core!");
+        if (Physics.Raycast(firingTrans.position, firingTrans.forward, out hit)) {
+			if (hit.transform == apple)
+				Debug.Log("Apple core!");
+			else
+				Debug.Log("shot child!");
         }
     }
 

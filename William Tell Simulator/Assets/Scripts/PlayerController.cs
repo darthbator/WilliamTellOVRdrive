@@ -13,16 +13,17 @@ public class PlayerController : MonoBehaviour {
 
 	void Awake ()
     {
-        trackedObj = ControllerManager.right.GetComponent<SteamVR_TrackedObject>();
-        controller = ControllerManager.right.GetComponent<SteamVR_TrackedController>();
 	}
 
     void Start()
     {
+		trackedObj = ControllerManager.right.GetComponent<SteamVR_TrackedObject>();
+		controller = ControllerManager.right.GetComponent<SteamVR_TrackedController>();
+		Assign();
         device = SteamVR_Controller.Input((int)trackedObj.index);
     }
 
-    void OnEnable()
+    void Assign ()
     {
         controller.TriggerClicked += Gun.Shoot;
     }
