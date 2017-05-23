@@ -33,5 +33,6 @@ public class Gun : MonoBehaviour {
     public void Shoot(object sender, ClickedEventArgs e)
     {
         Fire();
+        PlayerController.Instance.Haptic(1000);
     }
 }

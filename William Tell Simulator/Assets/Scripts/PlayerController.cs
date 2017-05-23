@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
 
+    public static PlayerController Instance;
+
     public SteamVR_ControllerManager ControllerManager;
     public Gun Gun;
 
@@ -11,8 +13,16 @@ public class PlayerController : MonoBehaviour {
     SteamVR_TrackedController controller;
     SteamVR_Controller.Device device;
 
-	void Awake ()
+    void Awake()
     {
+        if (Instance == null)
+            Instance = this;
+        else
+        {
+            Destroy(this.gameObject);
+            return;
+        }
+
         trackedObj = ControllerManager.right.GetComponent<SteamVR_TrackedObject>();
         controller = ControllerManager.right.GetComponent<SteamVR_TrackedController>();
 	}
@@ -25,5 +35,11 @@ public class PlayerController : MonoBehaviour {
     void OnEnable()
     {
         controller.TriggerClicked += Gun.Shoot;
+    }
+
+    public void Haptic(ushort microsecondDuration)
+    {
+        microsecondDuration = (ushort)Mathf.Clamp(microsecondDuration, 1, 3999);
+        device.TriggerHapticPulse(microsecondDuration);
     }
 }
