@@ -4,7 +4,7 @@ using UnityEngine;
 using Valve.VR.InteractionSystem;
 
 public class Gun : MonoBehaviour {
-	private Arrow currentArrow;
+	private Arrow arrow;
 
 	//SHOTS SHOTS SHOTS SHOTS!!
 	public int maxShots;
@@ -32,7 +32,7 @@ public class Gun : MonoBehaviour {
 	public LineRenderer laserSight;
 
     private bool canFire {
-        get { return (distance < minDistance && currentArrow != null) ? false : true;  }
+        get { return (distance < minDistance || arrow == null) ? false : true;  }
     }
 
 	void Update () {
@@ -78,7 +78,6 @@ public class Gun : MonoBehaviour {
 	private void ShootArrow () {
 		Shots++;
 		animator.Play("Shoot");
-		Arrow arrow = currentArrow;
 		arrow.shaftRB.isKinematic = false;
 		arrow.shaftRB.useGravity = true;
 		arrow.shaftRB.transform.GetComponent<BoxCollider>().enabled = true;
@@ -91,7 +90,7 @@ public class Gun : MonoBehaviour {
 
 		arrow.arrowHeadRB.AddForce(arrow.transform.forward * arrowReleaseVelocity, ForceMode.VelocityChange);
 		arrow.arrowHeadRB.AddTorque(arrow.transform.forward * 10f);
-		currentArrow = null;
+		arrow = null;
 	}
 
 	private void LaserSight () {
@@ -103,7 +102,7 @@ public class Gun : MonoBehaviour {
 
     public void Shoot(object sender, ClickedEventArgs e)
     {
-		if (PlayerController.Instance.gameOver)
+		if (PlayerController.Instance.gameOver || !canFire)
 			return;
 
 		//Fire();
@@ -112,7 +111,7 @@ public class Gun : MonoBehaviour {
     }
 
 	public void Reload () {
-		currentArrow = Instantiate(arrowPrefab);
-		currentArrow.transform.SetParent(arrowFather, false);
+		arrow = Instantiate(arrowPrefab);
+		arrow.transform.SetParent(arrowFather, false);
 	}
 }
