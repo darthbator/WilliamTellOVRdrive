@@ -22,24 +22,33 @@ public class TitleScreen : MonoBehaviour {
 		float timer = 0;
 		while (timer < FadeTime)
 		{
-			sickPic.color = new Color(1,1,1, Mathf.Lerp(0,1, timer/FadeTime));
-
 			timer += Time.deltaTime;
+			sickPic.color = new Color(1,1,1, Mathf.Lerp(0,1, timer/FadeTime));
 			yield return null;
 		}
 
 		// wait before fade out
 		yield return new WaitForSeconds(WaitToFadeTime);
 
+		// fade time divided by 3
+		FadeTime /= 3;
+
+		Vector3 startingPos = transform.localPosition;
+		Vector3 endingPos = new Vector3(280f, -175f, 0f);
+		Vector3 startingScale = transform.localScale;
 		// fade out
 		timer = FadeTime;
 		while (timer > 0.0f)
 		{
-			sickPic.color = new Color(1,1,1, Mathf.Lerp(0, 1, timer / FadeTime));
+			//sickPic.color = new Color(1,1,1, Mathf.Lerp(0, 1, timer / FadeTime));
+			transform.localPosition = Vector3.Lerp(endingPos, startingPos, timer / FadeTime);
+			transform.localScale = Vector3.Lerp(Vector3.one / 10, startingScale, timer / FadeTime);
 			timer -= Time.deltaTime;
 			yield return null;
 		}
-		sickPic.color = new Color(1,1,1,0);
+		//sickPic.color = new Color(1,1,1,0);
+		transform.localPosition = endingPos;
+		transform.localScale = Vector3.one / 10;
 
 		// done
 		yield break;

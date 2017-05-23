@@ -16,9 +16,7 @@ public class ExternalCamera : MonoBehaviour {
 			return trans;
 		}
 	}
-
 	Transform trans;
-	float angle = 0;
 
 
 	void Update () 

@@ -38,10 +38,24 @@ public class MusicManager : MonoBehaviour {
 	void PlayNextSong()
 	{
 		currentSongIndex++;
+		if (currentSongIndex >= DopeTracks.Length)
+			currentSongIndex = 0;
+
 		MusicAudioSource.clip = DopeTracks[currentSongIndex];
 		currentSongLength = DopeTracks[currentSongIndex].length;
 		MusicAudioSource.Play();
 
 		StartCoroutine(WaitUntilSongDone());
 	}
+		
+#if UNITY_EDITOR
+	void Update()
+	{
+		if (Input.GetKeyDown(KeyCode.N))
+		{
+			StopAllCoroutines();
+			PlayNextSong();
+		}
+	}
+#endif
 }

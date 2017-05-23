@@ -29,12 +29,6 @@ public class Party : MonoBehaviour {
 		TotallyNecessarySingletonInstance = null;
 	}
 
-	void Update()
-	{
-		if (Input.GetKeyDown(KeyCode.Space))
-			FuckinPartyDude();
-	}
-
 	public void FuckinPartyDude()
 	{
 		for (int i = 0; i < BalloonSpawnAmount; i++)
@@ -57,4 +51,12 @@ public class Party : MonoBehaviour {
 
 		return new Vector3(Random.Range(minX,maxX), Random.Range(minY,maxY), Random.Range(minZ,maxZ));
 	}
+
+	#if UNITY_EDITOR
+	void Update()
+	{
+		if (Input.GetKeyDown(KeyCode.Space))
+			FuckinPartyDude();
+	}
+	#endif
 }
