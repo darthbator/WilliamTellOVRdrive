@@ -6,7 +6,9 @@ using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour {
 
-    public static PlayerController Instance;
+    public float wallOffsetScalar;
+
+	public static PlayerController Instance;
 
 	public bool gameOver = false;
 	public float endGameWait = 3f;
@@ -45,12 +47,18 @@ public class PlayerController : MonoBehaviour {
         trackedObj = ControllerManager.right.GetComponent<SteamVR_TrackedObject>();
         controller = ControllerManager.right.GetComponent<SteamVR_TrackedController>();
 		controller.TriggerClicked += Gun.Shoot;
+		controller.MenuButtonUnclicked += PlaceWall;
 	}
 
     void Start()
     {
         device = SteamVR_Controller.Input((int)trackedObj.index);
     }
+
+	void Update () {
+		if (Input.GetKeyDown(KeyCode.Space))
+			PlaceWall(null, new ClickedEventArgs());
+	}
 
     public void Haptic(ushort microsecondDuration)
     {
@@ -78,5 +86,22 @@ public class PlayerController : MonoBehaviour {
 		Debug.LogWarning("Restarting game");
 		yield return new WaitForSeconds (endGameWait);
 		SceneManager.LoadScene(0);
+	}
+
+	public void PlaceWall (object sender, ClickedEventArgs args) {
+		Transform wall = GameObject.Find("WallFather").transform;
+
+		//Get the backwards vector absent tilt
+		Vector3 backwards = -Camera.main.transform.forward;
+		backwards.y = 0;
+
+		//place the wall
+		Vector3 newPlacement = Camera.main.transform.position;
+		newPlacement.y = wall.transform.position.y;
+		wall.transform.position = newPlacement + backwards;
+
+		//rotate wall
+		float headsetEulerY = Camera.main.transform.rotation.eulerAngles.y;
+		wall.rotation = Quaternion.Euler(new Vector3 (0, headsetEulerY, 0));
 	}
 }
