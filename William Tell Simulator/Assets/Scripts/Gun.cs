@@ -31,7 +31,8 @@ public class Gun : MonoBehaviour {
 		LaserSight();
      }
 
-    private void Fire ()
+	//Old gun firing method goes to sleep... zzz mr gun method!
+    /*private void Fire ()
     {
         if (!canFire)
             return;
@@ -56,7 +57,7 @@ public class Gun : MonoBehaviour {
 			}
 			PlayerController.Instance.EndGame();
         }
-    }
+    }*/
 
 	private void ShootArrow () {
 		//Arrow newArrow = Instantiate(arrowPrefab, firingTrans.position, transform.rotation);
@@ -85,6 +86,9 @@ public class Gun : MonoBehaviour {
 
     public void Shoot(object sender, ClickedEventArgs e)
     {
+		if (PlayerController.Instance.gameOver)
+			return;
+
 		//Fire();
 		ShootArrow();
         PlayerController.Instance.Haptic(1000);

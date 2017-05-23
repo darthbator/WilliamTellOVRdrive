@@ -176,14 +176,9 @@ namespace Valve.VR.InteractionSystem
 
 				if (collision.gameObject.name == "Apple") {
 					collision.transform.SetParent(transform);
-					PlayerController.Instance.gameOver = true;
-					PlayerController.Instance.vrInstructionText.text = "you shot dat arrow BOIEEEE";
-					PlayerController.Instance.externalMonitorText.text = "you shot dat arrow BOIEEEE";
-					PlayerController.Instance.vrInstructionText.enabled = true;
-					PlayerController.Instance.externalMonitorText.enabled = true;
-					PlayerController.Instance.EndGame();
-				}
-
+					PlayerController.Instance.EndGame(true);
+				} else if (collision.gameObject.name == "Head") 
+					PlayerController.Instance.HeadHits++;
 
 				// Player Collision Check (self hit)
 				/*if ( Player.instance && collision.collider == Player.instance.headCollider )

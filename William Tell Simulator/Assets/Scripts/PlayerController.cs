@@ -15,6 +15,17 @@ public class PlayerController : MonoBehaviour {
 	public Text vrInstructionText;
 	public Text externalMonitorText;
 
+	public int maxHeadHits;
+	private int headHits;
+	public int HeadHits {
+		get { return headHits; }
+		set {
+			headHits = value;
+			if (headHits >= maxHeadHits)
+				EndGame(false);
+		}
+	}
+
     SteamVR_TrackedObject trackedObj;
     SteamVR_TrackedController controller;
     SteamVR_Controller.Device device;
@@ -47,13 +58,25 @@ public class PlayerController : MonoBehaviour {
         device.TriggerHapticPulse(microsecondDuration);
     }
 
-	public void EndGame () {
-		StartCoroutine(_EndGame());
+	public void EndGame (bool winState) {
+		StartCoroutine(_EndGame(winState));
 	}
 
-	private IEnumerator _EndGame () {
-		yield return new WaitForSeconds (endGameWait);
+	private IEnumerator _EndGame (bool winState) {
+		gameOver = true;
+
+		if (winState) {
+			vrInstructionText.text = "you shot dat arrow BOIEEEE";
+			externalMonitorText.text = "you shot dat arrow BOIEEEE";
+		} else {
+			PlayerController.Instance.vrInstructionText.text = "YOU'RE DEAD!!!!";
+			PlayerController.Instance.externalMonitorText.text = "YOU SHOT HIM YOU MONSTER!!!!!!";
+		}
+
+		vrInstructionText.enabled = true;
+		externalMonitorText.enabled = true;
 		Debug.LogWarning("Restarting game");
+		yield return new WaitForSeconds (endGameWait);
 		SceneManager.LoadScene(0);
 	}
 }
