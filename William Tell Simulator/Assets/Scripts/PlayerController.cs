@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour {
 
     public static PlayerController Instance;
 
+	public bool gameOver = false;
 	public float endGameWait = 3f;
     public SteamVR_ControllerManager ControllerManager;
     public Gun Gun;
@@ -52,6 +53,7 @@ public class PlayerController : MonoBehaviour {
 
 	private IEnumerator _EndGame () {
 		yield return new WaitForSeconds (endGameWait);
+		Debug.LogWarning("Restarting game");
 		SceneManager.LoadScene(0);
 	}
 }

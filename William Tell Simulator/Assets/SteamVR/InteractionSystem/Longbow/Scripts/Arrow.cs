@@ -78,15 +78,16 @@ namespace Valve.VR.InteractionSystem
 			}
 
 			// Check if arrow is shot inside or too close to an object
-			RaycastHit[] hits = Physics.SphereCastAll( transform.position, 0.01f, transform.forward, 0.80f, Physics.DefaultRaycastLayers, QueryTriggerInteraction.Ignore );
+			//Lets just go ahead and turn this off for now or maybe forever and ever
+			/*RaycastHit[] hits = Physics.SphereCastAll( transform.position, 0.01f, transform.forward, 0.80f, Physics.DefaultRaycastLayers, QueryTriggerInteraction.Ignore );
 			foreach ( RaycastHit hit in hits )
 			{
-				if ( hit.collider.gameObject != gameObject && hit.collider.gameObject != arrowHeadRB.gameObject /*&& hit.collider != Player.instance.headCollider*/ )
+				if ( hit.collider.gameObject != gameObject && hit.collider.gameObject != arrowHeadRB.gameObject && hit.collider != Player.instance.headCollider)
 				{
 					Destroy( gameObject );
 					return;
 				}
-			}
+			}*/
 
 			travelledFrames = 0;
 			prevPosition = transform.position;
@@ -172,6 +173,17 @@ namespace Valve.VR.InteractionSystem
 				{
 					StickInTarget( collision, travelledFrames < 2 );
 				}
+
+				if (collision.gameObject.name == "Apple") {
+					collision.transform.SetParent(transform);
+					PlayerController.Instance.gameOver = true;
+					PlayerController.Instance.vrInstructionText.text = "you shot dat arrow BOIEEEE";
+					PlayerController.Instance.externalMonitorText.text = "you shot dat arrow BOIEEEE";
+					PlayerController.Instance.vrInstructionText.enabled = true;
+					PlayerController.Instance.externalMonitorText.enabled = true;
+					PlayerController.Instance.EndGame();
+				}
+
 
 				// Player Collision Check (self hit)
 				/*if ( Player.instance && collision.collider == Player.instance.headCollider )
