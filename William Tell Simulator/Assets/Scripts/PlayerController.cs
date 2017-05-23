@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour {
 
@@ -48,6 +49,6 @@ public class PlayerController : MonoBehaviour {
 
 	private IEnumerator _EndGame () {
 		yield return new WaitForSeconds (endGameWait);
-		Application.LoadLevel(0);
+		SceneManager.LoadScene(0);
 	}
 }
