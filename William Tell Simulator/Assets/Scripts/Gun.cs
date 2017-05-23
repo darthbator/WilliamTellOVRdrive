@@ -9,15 +9,19 @@ public class Gun : MonoBehaviour {
     public float minDistance;
     private float distance;
 
+	public LineRenderer laserSight;
+
     private bool canFire {
         get { return (distance < minDistance) ? false : true;  }
     }
-
 	
 	void Update () {
         distance = Vector3.Distance(firingTrans.position, apple.position);
 		if (!canFire)
 			Debug.Log("TO CLOSE!!!");
+
+		//Lazerz dawgz
+		LaserSight();
      }
 
     private void Fire ()
@@ -37,6 +41,13 @@ public class Gun : MonoBehaviour {
 				
         }
     }
+
+	private void LaserSight () {
+		laserSight.SetPosition(0, firingTrans.position);
+		RaycastHit hit;
+		Vector3 endPos = (Physics.Raycast(firingTrans.position, firingTrans.forward, out hit)) ? hit.point : firingTrans.forward * 1000f;
+		laserSight.SetPosition(1, endPos);
+	}
 
     public void Shoot(object sender, ClickedEventArgs e)
     {
