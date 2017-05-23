@@ -41,7 +41,7 @@ namespace Valve.VR.InteractionSystem
 		//-------------------------------------------------
 		void Start()
 		{
-			Physics.IgnoreCollision( shaftRB.GetComponent<Collider>(), Player.instance.headCollider );
+			//Physics.IgnoreCollision( shaftRB.GetComponent<Collider>(), Player.instance.headCollider );
 		}
 
 
@@ -81,7 +81,7 @@ namespace Valve.VR.InteractionSystem
 			RaycastHit[] hits = Physics.SphereCastAll( transform.position, 0.01f, transform.forward, 0.80f, Physics.DefaultRaycastLayers, QueryTriggerInteraction.Ignore );
 			foreach ( RaycastHit hit in hits )
 			{
-				if ( hit.collider.gameObject != gameObject && hit.collider.gameObject != arrowHeadRB.gameObject && hit.collider != Player.instance.headCollider )
+				if ( hit.collider.gameObject != gameObject && hit.collider.gameObject != arrowHeadRB.gameObject /*&& hit.collider != Player.instance.headCollider*/ )
 				{
 					Destroy( gameObject );
 					return;
@@ -94,6 +94,8 @@ namespace Valve.VR.InteractionSystem
 			prevHeadPosition = arrowHeadRB.transform.position;
 			prevVelocity = GetComponent<Rigidbody>().velocity;
 
+			GetComponent<Rigidbody>().velocity = transform.forward * inputVelocity;
+
 			Destroy( gameObject, 30 );
 		}
 
@@ -105,7 +107,8 @@ namespace Valve.VR.InteractionSystem
 			{
 				Rigidbody rb = GetComponent<Rigidbody>();
 				float rbSpeed = rb.velocity.sqrMagnitude;
-				bool canStick = ( targetPhysMaterial != null && collision.collider.sharedMaterial == targetPhysMaterial && rbSpeed > 0.2f );
+				//bool canStick = ( targetPhysMaterial != null && collision.collider.sharedMaterial == targetPhysMaterial && rbSpeed > 0.2f );
+				bool canStick = (collision.gameObject.tag == "stickable" && rbSpeed > 0.2f);
 				bool hitBalloon = collision.collider.gameObject.GetComponent<Balloon>() != null;
 
 				if ( travelledFrames < 2 && !canStick )
@@ -155,7 +158,7 @@ namespace Valve.VR.InteractionSystem
 					}
 				}
 
-				if ( hitBalloon )
+				/*if ( hitBalloon )
 				{
 					// Revert my physics properties cause I don't want balloons to influence my travel
 					transform.position = prevPosition;
@@ -163,7 +166,7 @@ namespace Valve.VR.InteractionSystem
 					arrowHeadRB.velocity = prevVelocity;
 					Physics.IgnoreCollision( arrowHeadRB.GetComponent<Collider>(), collision.collider );
 					Physics.IgnoreCollision( shaftRB.GetComponent<Collider>(), collision.collider );
-				}
+				}*/
 
 				if ( canStick )
 				{
@@ -171,10 +174,10 @@ namespace Valve.VR.InteractionSystem
 				}
 
 				// Player Collision Check (self hit)
-				if ( Player.instance && collision.collider == Player.instance.headCollider )
+				/*if ( Player.instance && collision.collider == Player.instance.headCollider )
 				{
 					Player.instance.PlayerShotSelf();
-				}
+				}*/
 			}
 		}
 

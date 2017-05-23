@@ -1,9 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Valve.VR.InteractionSystem;
 
 public class Gun : MonoBehaviour {
-    public Transform apple;
+    public Arrow arrowPrefab;
+	public float arrowReleaseVelocity;
+
+	public Transform apple;
 	public Transform head;
     public Transform firingTrans;
     public float minDistance;
@@ -51,6 +55,24 @@ public class Gun : MonoBehaviour {
         }
     }
 
+	private void ShootArrow () {
+		//Arrow newArrow = Instantiate(arrowPrefab, firingTrans.position, transform.rotation);
+
+		Arrow arrow = Instantiate(arrowPrefab, firingTrans.position, transform.rotation);;
+		arrow.shaftRB.isKinematic = false;
+		arrow.shaftRB.useGravity = true;
+		arrow.shaftRB.transform.GetComponent<BoxCollider>().enabled = true;
+
+		arrow.arrowHeadRB.isKinematic = false;
+		arrow.arrowHeadRB.useGravity = true;
+		arrow.arrowHeadRB.transform.GetComponent<BoxCollider>().enabled = true;
+
+		arrow.ArrowReleased(arrowReleaseVelocity);
+
+		arrow.arrowHeadRB.AddForce(arrow.transform.forward * arrowReleaseVelocity, ForceMode.VelocityChange);
+		arrow.arrowHeadRB.AddTorque(arrow.transform.forward * 10f);
+	}
+
 	private void LaserSight () {
 		laserSight.SetPosition(0, firingTrans.position);
 		RaycastHit hit;
@@ -60,7 +82,8 @@ public class Gun : MonoBehaviour {
 
     public void Shoot(object sender, ClickedEventArgs e)
     {
-		Fire();
+		//Fire();
+		ShootArrow();
         PlayerController.Instance.Haptic(1000);
     }
 }
