@@ -15,8 +15,8 @@ public class PlayerController : MonoBehaviour {
 
     void Awake()
     {
-        trackedObj = ControllerManager.right.GetComponent<SteamVR_TrackedObject>();
-        controller = ControllerManager.right.GetComponent<SteamVR_TrackedController>();
+<<<<<<< HEAD
+=======
         if (Instance == null)
             Instance = this;
         else
@@ -27,12 +27,20 @@ public class PlayerController : MonoBehaviour {
 
         trackedObj = ControllerManager.right.GetComponent<SteamVR_TrackedObject>();
         controller = ControllerManager.right.GetComponent<SteamVR_TrackedController>();
-		controller.TriggerClicked += Gun.Shoot;
+>>>>>>> ed221527d4a4229a18260de9a48e8a821c78d175
 	}
 
     void Start()
     {
+		trackedObj = ControllerManager.right.GetComponent<SteamVR_TrackedObject>();
+		controller = ControllerManager.right.GetComponent<SteamVR_TrackedController>();
+		Assign();
         device = SteamVR_Controller.Input((int)trackedObj.index);
+    }
+
+    void Assign ()
+    {
+        controller.TriggerClicked += Gun.Shoot;
     }
 
     public void Haptic(ushort microsecondDuration)

@@ -15,6 +15,8 @@ public class Gun : MonoBehaviour {
 	
 	void Update () {
         distance = Vector3.Distance(firingTrans.position, apple.position);
+		if (!canFire)
+			Debug.Log("TO CLOSE!!!");
      }
 
     private void Fire ()
@@ -22,7 +24,6 @@ public class Gun : MonoBehaviour {
         if (!canFire)
             return;
 
-		print("pew pew");
         RaycastHit hit;
         if (Physics.Raycast(firingTrans.position, firingTrans.forward, out hit)) {
 			if (hit.transform == apple)
@@ -34,7 +35,7 @@ public class Gun : MonoBehaviour {
 
     public void Shoot(object sender, ClickedEventArgs e)
     {
-        Fire();
+		Fire();
         PlayerController.Instance.Haptic(1000);
     }
 }
