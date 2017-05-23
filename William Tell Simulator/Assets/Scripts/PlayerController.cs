@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour {
@@ -10,6 +11,7 @@ public class PlayerController : MonoBehaviour {
 	public float endGameWait = 3f;
     public SteamVR_ControllerManager ControllerManager;
     public Gun Gun;
+	public Text vrInstructionText;
 
     SteamVR_TrackedObject trackedObj;
     SteamVR_TrackedController controller;
@@ -23,7 +25,7 @@ public class PlayerController : MonoBehaviour {
             Instance = this;
         else
         {
-            Destroy(this.gameObject);
+            Destroy(this.gameObject); 
             return;
         }
 

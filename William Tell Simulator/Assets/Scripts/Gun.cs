@@ -17,8 +17,7 @@ public class Gun : MonoBehaviour {
 	
 	void Update () {
         distance = Vector3.Distance(firingTrans.position, apple.position);
-		if (!canFire)
-			Debug.Log("TO CLOSE!!!");
+		PlayerController.Instance.vrInstructionText.enabled = !canFire;
 
 		//Lazerz dawgz
 		LaserSight();
