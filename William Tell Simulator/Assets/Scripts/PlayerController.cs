@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour {
 
-    public float wallOffsetScalar;
+    public float bowOffsetScalar;
 
 	public static PlayerController Instance;
 
@@ -103,5 +103,7 @@ public class PlayerController : MonoBehaviour {
 		//rotate wall
 		float headsetEulerY = Camera.main.transform.rotation.eulerAngles.y;
 		wall.rotation = Quaternion.Euler(new Vector3 (0, headsetEulerY, 0));
+		 
+		GameObject.Find("BowFather").transform.position = -backwards * bowOffsetScalar;
 	}
 }
