@@ -41,7 +41,7 @@ public class PlayerController : MonoBehaviour {
 
     public void Haptic(ushort microsecondDuration)
     {
-        microsecondDuration = (ushort)Mathf.Clamp(microsecondDuration, 1, 3999);
+        microsecondDuration = (ushort)Mathf.Clamp((int)microsecondDuration, 1, 3999);
         device.TriggerHapticPulse(microsecondDuration);
     }
 
