@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class PlayerController : MonoBehaviour {
 	[SerializeField] private Transform bowFather;
 
+	public Image[] heartImages = new Image[3]; 
 	public string winText;
 	public string loseText;
     public float bowOffsetScalar;
@@ -26,6 +27,13 @@ public class PlayerController : MonoBehaviour {
 		get { return headHits; }
 		set {
 			headHits = value;
+
+			int life = maxHeadHits - headHits;
+
+
+
+				
+
 			if (headHits >= maxHeadHits)
 				EndGame(false);
 		}
