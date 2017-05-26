@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class PlayerController : MonoBehaviour {
 	[SerializeField] private Transform bowFather;
 
-	public Image[] heartImages = new Image[3]; 
+
 	public string winText;
 	public string loseText;
     public float bowOffsetScalar;
@@ -21,15 +21,28 @@ public class PlayerController : MonoBehaviour {
 	public Text vrInstructionText;
 	public Text externalMonitorText;
 
+	private Image[] heartImages; 
+	[SerializeField] private int health;
+	public int Health {
+		get { return health; }
+		set {
+			health = value;
+			heartImages [health].enabled = false;
+			
+			if (health <= 0)
+				EndGame(false);
+		}
+	}
+
+
+	public Image heartPrefab;
+	public RectTransform heartFather;
 	public int maxHeadHits;
 	private int headHits;
 	public int HeadHits {
 		get { return headHits; }
 		set {
 			headHits = value;
-
-			int life = maxHeadHits - headHits;
-
 
 			if (headHits >= maxHeadHits)
 				EndGame(false);
@@ -56,11 +69,18 @@ public class PlayerController : MonoBehaviour {
         controller = ControllerManager.right.GetComponent<SteamVR_TrackedController>();
 		controller.TriggerClicked += Gun.Shoot;
 		controller.MenuButtonUnclicked += PlaceWall;
+
+		heartImages = new Image[health];
 	}
 
     void Start()
     {
         device = SteamVR_Controller.Input((int)trackedObj.index);
+
+		//init health display
+		for (int count = 0; count < health; count++) {
+			heartImages[count] = Instantiate(heartPrefab, heartFather) as Image;
+		}
     }
 
 	void Update () {

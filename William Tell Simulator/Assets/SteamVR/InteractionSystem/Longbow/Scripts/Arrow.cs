@@ -173,7 +173,8 @@ namespace Valve.VR.InteractionSystem
 					collision.transform.SetParent(transform);
 					PlayerController.Instance.EndGame(true);
 				} else if (collision.gameObject.name == "Head") {
-					PlayerController.Instance.HeadHits++;
+					//PlayerController.Instance.HeadHits++;
+					PlayerController.Instance.Health--;
 					BloodHit(collision.contacts);
 				}
 

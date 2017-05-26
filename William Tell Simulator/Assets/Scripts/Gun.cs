@@ -1,22 +1,23 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using Valve.VR.InteractionSystem;
 
 public class Gun : MonoBehaviour {
 	private Arrow arrow;
 
 	//SHOTS SHOTS SHOTS SHOTS!!
+	public Text shotsUI;
 	public int maxShots;
-	private int shots = 0;
+	private int shots;
 	public int Shots {
 		get { return shots; }
 		set { 
 			shots = value;
-			int shotsRemaining = maxShots - shots - 1;
-			//Add in a UI update method here
+			shotsUI.text = shots.ToString();
 
-			if (shots >= maxShots)
+			if (shots <= 0)
 				PlayerController.Instance.EndGame(false);
 		}
 	}
@@ -37,6 +38,10 @@ public class Gun : MonoBehaviour {
     private bool canFire {
         get { return (distance < minDistance || arrow == null) ? false : true;  }
     }
+
+	void Start () {
+		Shots = maxShots;
+	}
 
 	void Update () {
         //distance = Vector3.Distance(firingTrans.position, apple.position);
@@ -85,7 +90,7 @@ public class Gun : MonoBehaviour {
     }*/
 
 	private void ShootArrow () {
-		Shots++;
+		Shots--;
 		animator.Play("Shoot");
 		arrow.shaftRB.isKinematic = false;
 		arrow.shaftRB.useGravity = true;
