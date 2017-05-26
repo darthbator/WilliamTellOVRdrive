@@ -54,6 +54,11 @@ public class ExternalCameraManager : MonoBehaviour {
         Cameras[currentCamIndex].enabled = false;
 
         currentCamIndex += (previous ? -1 : 1);
+        if (currentCamIndex >= Cameras.Length)
+            currentCamIndex = 0;
+        else if (currentCamIndex < 0)
+            currentCamIndex = Cameras.Length - 1;
+
         Cameras[currentCamIndex].enabled = true;
         ExternalMonitorCanvas.worldCamera = Cameras[currentCamIndex];
     }
