@@ -13,6 +13,9 @@ public class Gun : MonoBehaviour {
 		get { return shots; }
 		set { 
 			shots = value;
+			int shotsRemaining = maxShots - shots - 1;
+			//Add in a UI update method here
+
 			if (shots >= maxShots)
 				PlayerController.Instance.EndGame(false);
 		}
