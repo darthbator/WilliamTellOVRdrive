@@ -31,9 +31,6 @@ public class PlayerController : MonoBehaviour {
 			int life = maxHeadHits - headHits;
 
 
-
-				
-
 			if (headHits >= maxHeadHits)
 				EndGame(false);
 		}

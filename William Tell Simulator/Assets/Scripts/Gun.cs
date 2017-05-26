@@ -24,7 +24,7 @@ public class Gun : MonoBehaviour {
 
 	public Transform apple;
 	public Transform head;
-    public Transform firingTrans;
+    public Transform sightTrans;
 	public Transform arrowFather;
     public float minDistance;
     private float distance;
@@ -36,7 +36,8 @@ public class Gun : MonoBehaviour {
     }
 
 	void Update () {
-        distance = Vector3.Distance(firingTrans.position, apple.position);
+        //distance = Vector3.Distance(firingTrans.position, apple.position);
+		distance = Vector3.Distance(transform.position, apple.position);
 
 		if (distance <= minDistance) {
 			PlayerController.Instance.vrInstructionText.enabled = !canFire;
@@ -90,7 +91,7 @@ public class Gun : MonoBehaviour {
 		arrow.arrowHeadRB.isKinematic = false;
 		arrow.arrowHeadRB.useGravity = true;
 		arrow.arrowHeadRB.transform.GetComponent<BoxCollider>().enabled = true;
-
+		arrow.transform.parent = null;
 		arrow.ArrowReleased(arrowReleaseVelocity);
 
 		arrow.arrowHeadRB.AddForce(arrow.transform.forward * arrowReleaseVelocity, ForceMode.VelocityChange);
@@ -99,9 +100,9 @@ public class Gun : MonoBehaviour {
 	}
 
 	private void LaserSight () {
-		laserSight.SetPosition(0, firingTrans.position);
+		laserSight.SetPosition(0, sightTrans.position);
 		RaycastHit hit;
-		Vector3 endPos = (Physics.Raycast(firingTrans.position, firingTrans.forward, out hit)) ? hit.point : firingTrans.forward * 1000f;
+		Vector3 endPos = (Physics.Raycast(sightTrans.position, sightTrans.forward, out hit)) ? hit.point : sightTrans.forward * 1000f;
 		laserSight.SetPosition(1, endPos);
 	}
 
@@ -116,6 +117,7 @@ public class Gun : MonoBehaviour {
     }
 
 	public void Reload () {
+		Debug.Log("reload");
 		arrow = Instantiate(arrowPrefab);
 		arrow.transform.SetParent(arrowFather, false);
 	}
