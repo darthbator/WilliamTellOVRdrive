@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: a70320ad72d3d96408970969afd97159
-timeCreated: 1495526585
+guid: 356161eb69f44c74eb527e35cd852a14
+timeCreated: 1495761984
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
@@ -55,7 +55,7 @@ ModelImporter:
       name: DrawBack
       takeName: Take 001
       firstFrame: 1
-      lastFrame: 24
+      lastFrame: 23
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -74,15 +74,7 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events:
-      - time: 1
-        functionName: Reload
-        data: 
-        objectReferenceParameter: {fileID: 1376192511020442, guid: 9c13eb9648f6b9849abaf93b4e8f0061,
-          type: 2}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
+      events: []
       transformMask:
       - path: 
         weight: 1
@@ -110,8 +102,8 @@ ModelImporter:
     - serializedVersion: 16
       name: Shoot
       takeName: Take 001
-      firstFrame: 24
-      lastFrame: 29
+      firstFrame: 23
+      lastFrame: 33
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
