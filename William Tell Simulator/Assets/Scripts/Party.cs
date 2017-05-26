@@ -12,8 +12,17 @@ public class Party : MonoBehaviour {
 
 	BoxCollider box;
 
+    void OnDrawGizmosSelected()
+    {
+        if (box == null)
+            box = GetComponent<BoxCollider>();
 
-	void Awake ()
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireCube(transform.position, box.size);
+    }
+
+
+    void Awake ()
 	{
 		if (TotallyNecessarySingletonInstance == null)
 			TotallyNecessarySingletonInstance = this;
