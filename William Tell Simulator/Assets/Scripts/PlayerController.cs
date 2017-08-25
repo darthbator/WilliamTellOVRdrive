@@ -81,6 +81,8 @@ public class PlayerController : MonoBehaviour {
 		for (int count = 0; count < health; count++) {
 			heartImages[count] = Instantiate(heartPrefab, heartFather) as Image;
 		}
+
+		PlaceWall(null, new ClickedEventArgs());
     }
 
 	void Update () {
@@ -104,6 +106,7 @@ public class PlayerController : MonoBehaviour {
 		if (winState) {
 			vrInstructionText.text = winText;
 			externalMonitorText.text = winText;
+			GameObject.FindObjectOfType<Party>().FuckinPartyDude();
 		} else {
 			vrInstructionText.text = loseText;
 			externalMonitorText.text = loseText;
@@ -120,18 +123,23 @@ public class PlayerController : MonoBehaviour {
 		Transform wall = GameObject.Find("WallFather").transform;
 
 		//Get the backwards vector absent tilt
-		Vector3 backwards = -Camera.main.transform.forward;
-		backwards.y = 0;
+		//Vector3 backwards = -Camera.main.transform.forward;
+		Vector3 dirToHead = Camera.main.transform.position - Gun.transform.position;
+		dirToHead.Normalize();
+		dirToHead.y = 0;
 
 		//place the wall
 		Vector3 newPlacement = Camera.main.transform.position;
 		newPlacement.y = wall.transform.position.y;
-		wall.transform.position = newPlacement + backwards;
+		wall.transform.position = newPlacement + dirToHead;
 
 		//rotate wall
-		float headsetEulerY = Camera.main.transform.rotation.eulerAngles.y;
-		wall.rotation = Quaternion.Euler(new Vector3 (0, headsetEulerY, 0));
+		//Transform wallTrans = wall.GetChild(0);
+		wall.LookAt(Gun.transform);
+		wall.rotation = Quaternion.Euler(new Vector3(0f, wall.rotation.eulerAngles.y, 0f));
+		//float headsetEulerY = Camera.main.transform.rotation.eulerAngles.y;
+		//wall.rotation = Quaternion.Euler(new Vector3 (0, headsetEulerY, 0));
 		 
-		bowFather.position = -backwards * bowOffsetScalar;
+		bowFather.position = -dirToHead * bowOffsetScalar;
 	}
 }

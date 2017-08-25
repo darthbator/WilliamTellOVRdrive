@@ -2,27 +2,26 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ExternalCamera : MonoBehaviour {
+public class FollowTransform : MonoBehaviour {
 
-	public float AngleIncrement = 0.25f;
-
+	public Transform FollowTrans;
 	public Transform Trans
 	{
 		get 
 		{
 			if (trans == null)
 				trans = GetComponent<Transform>();
-
 			return trans;
 		}
 	}
 	Transform trans;
 
-
 	void Update () 
 	{
-		Trans.RotateAround(Vector3.zero, Vector3.up, AngleIncrement);
-		Trans.LookAt(Vector3.zero);
-		print("rot");
+		if (FollowTrans == null)
+			return;
+
+		Trans.position = FollowTrans.position;
+		Trans.rotation = FollowTrans.rotation;
 	}
 }
