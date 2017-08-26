@@ -23,7 +23,12 @@ public class Gun : MonoBehaviour {
 	}
 
 	public Arrow arrowPrefab;
-	public float arrowReleaseVelocity;
+	public float minReleaseVelocity;
+	public float maxReleaseVelocity;
+	public float ArrowReleaseVelocity {
+		get { return Random.Range(minReleaseVelocity, maxReleaseVelocity); }
+	}
+
 	public Animator animator;
 
 	public Transform apple;
@@ -100,9 +105,9 @@ public class Gun : MonoBehaviour {
 		arrow.arrowHeadRB.useGravity = true;
 		arrow.arrowHeadRB.transform.GetComponent<BoxCollider>().enabled = true;
 		arrow.transform.parent = null;
-		arrow.ArrowReleased(arrowReleaseVelocity);
+		arrow.ArrowReleased(ArrowReleaseVelocity);
 
-		arrow.arrowHeadRB.AddForce(arrow.transform.forward * arrowReleaseVelocity, ForceMode.VelocityChange);
+		arrow.arrowHeadRB.AddForce(arrow.transform.forward * ArrowReleaseVelocity, ForceMode.VelocityChange);
 		arrow.arrowHeadRB.AddTorque(arrow.transform.forward * 10f);
 		arrow = null;
 	}
